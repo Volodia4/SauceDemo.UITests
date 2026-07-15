@@ -11,10 +11,10 @@ public class LoginPage
         this._driver = driver;
     }
     
-    private By usernameInput = By.Name("[data-test='username']");
-    private By passwordInput = By.Name("[data-test='password']");
-    private By loginButton = By.Name("[data-test='login-button']");
-    private By errorMessage = By.Name("[data-test='error']");
+    private By usernameInput = By.CssSelector("[data-test='username']");
+    private By passwordInput = By.CssSelector("[data-test='password']");
+    private By loginButton = By.CssSelector("[data-test='login-button']");
+    private By errorMessage = By.CssSelector("[data-test='error']");
 
     public void LoginAs(string username, string password)
     {
