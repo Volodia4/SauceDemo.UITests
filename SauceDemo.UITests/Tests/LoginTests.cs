@@ -13,15 +13,16 @@ public class LoginTests:BaseTest
         loginPage.LoginAs("standard_user", "secret_sauce");
     }
     
-    [Test]
-    public void LockedOutUserTest()
+    [TestCase("locked_out_user", "secret_sauce", "Epic sadface: Sorry, this user has been locked out.")]
+    [TestCase("standard_user", "wrong_sauce", "Epic sadface: Username and password do not match any user in this service")]
+    [TestCase("", "", "Epic sadface: Username is required")]
+    public void InvalidLoginTests(string username, string password, string expectedError)
     {
         LoginPage loginPage = new LoginPage(driver);
         
-        loginPage.LoginAs("locked_out_user", "secret_sauce");
-        
+        loginPage.LoginAs(username, password);
         string actualError =  loginPage.GetErrorMessage();
         
-        Assert.That(actualError, Is.EqualTo("Epic sadface: Sorry, this user has been locked out."));
+        Assert.That(actualError, Is.EqualTo(expectedError));
     }
 }
