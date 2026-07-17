@@ -9,7 +9,6 @@ public class LoginTests:BaseTest
     public void ValidLoginTest()
     {
         LoginPage loginPage = new LoginPage(driver);
-        
         loginPage.LoginAs("standard_user", "secret_sauce");
     }
     
@@ -21,8 +20,7 @@ public class LoginTests:BaseTest
         LoginPage loginPage = new LoginPage(driver);
         
         loginPage.LoginAs(username, password);
-        string actualError =  loginPage.GetErrorMessage();
-        
+        string actualError = loginPage.GetErrorMessage();
         Assert.That(actualError, Is.EqualTo(expectedError));
     }
 }

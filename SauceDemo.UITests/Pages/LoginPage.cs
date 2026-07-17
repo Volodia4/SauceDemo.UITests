@@ -8,7 +8,7 @@ public class LoginPage
 
     public LoginPage(IWebDriver driver)
     {
-        this._driver = driver;
+        _driver = driver;
     }
     
     private By usernameInput = By.CssSelector("[data-test='username']");
