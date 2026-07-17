@@ -13,7 +13,8 @@ public class InventoryPage
     
     private By addToCartBtn = By.CssSelector("[data-test='add-to-cart-sauce-labs-backpack']");
     private By cartLinkBtn = By.CssSelector("[data-test='shopping-cart-link']");
-
+    private By cartBadge = By.CssSelector("[data-test='shopping-cart-badge']");
+    
     public void AddToCartClick()
     {
         _driver.FindElement(addToCartBtn).Click();
@@ -22,5 +23,10 @@ public class InventoryPage
     public void CartLinkClick()
     {
         _driver.FindElement(cartLinkBtn).Click();
+    }
+    
+    public string GetCartBadgeText()
+    {
+        return _driver.FindElement(cartBadge).Text;
     }
 }
