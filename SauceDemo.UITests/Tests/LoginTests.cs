@@ -21,7 +21,6 @@ public class LoginTests:BaseTest
         
         loginPage.LoginAs(username, password);
         string actualError = loginPage.GetErrorMessage();
-        
         Assert.That(actualError, Is.EqualTo(expectedError));
     }
 }

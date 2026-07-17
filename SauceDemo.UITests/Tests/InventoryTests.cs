@@ -19,12 +19,24 @@ public class InventoryTests:BaseTest
         InventoryPage inventoryPage = new InventoryPage(driver);
         CartPage cartPage = new CartPage(driver);
         
-        inventoryPage.AddToCartClick();
-        string cartBadgeText = inventoryPage.GetCartBadgeText();
-        Assert.That(cartBadgeText,Is.EqualTo("1"));
-        
+        inventoryPage.AddToCartClick(); 
+        Assert.That(inventoryPage.IsCartBadgeDisplayed(), Is.True);
+        Assert.That(inventoryPage.GetCartBadgeText(), Is.EqualTo("1"));
+
         inventoryPage.CartLinkClick();
-        string cartElementText = cartPage.GetCartElementText();
-        Assert.That(cartElementText, Is.EqualTo("Sauce Labs Backpack"));
+        Assert.That(cartPage.GetCartElementText(), Is.EqualTo("Sauce Labs Backpack"));
+    }
+
+    [Test]
+    public void RemoveFromCartTest()
+    {
+        Login();
+        
+        InventoryPage inventoryPage = new InventoryPage(driver);
+        
+        inventoryPage.AddToCartClick();
+        inventoryPage.RemoveFromCartClick();
+        Assert.That(inventoryPage.IsCartBadgeDisplayed(), Is.False);
+        Assert.That(inventoryPage.GetAddToCartButtonText(), Is.EqualTo("Add to cart"));
     }
 }
