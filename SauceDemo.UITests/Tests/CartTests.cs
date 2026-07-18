@@ -24,4 +24,44 @@ public class CartTests:BaseTest
         cartPage.RemoveFromCartClick();
         Assert.That(cartPage.IsItemsInCart(), Is.False);
     }
+
+    [Test]
+    public void CheckoutTest()
+    {
+        Login();
+        
+        InventoryPage inventoryPage = new InventoryPage(driver);
+        inventoryPage.CartLinkClick();
+        
+        CartPage cartPage = new CartPage(driver);
+        cartPage.CheckoutClick();
+        Assert.That(driver.Url, Does.EndWith("/checkout-step-one.html"));
+    }
+    
+    [Test]
+    public void ContinueShoppingTest()
+    {
+        Login();
+        
+        InventoryPage inventoryPage = new InventoryPage(driver);
+        inventoryPage.CartLinkClick();
+        
+        CartPage cartPage = new CartPage(driver);
+        cartPage.ContinueShoppingClick();
+        Assert.That(driver.Url, Does.EndWith("/inventory.html"));
+    }
+    
+    [Test]
+    public void CartElementClickTest()
+    {
+        Login();
+        
+        InventoryPage inventoryPage = new InventoryPage(driver);
+        inventoryPage.AddToCartClick();
+        inventoryPage.CartLinkClick();
+        
+        CartPage cartPage = new CartPage(driver);
+        cartPage.ItemNameClick();
+        Assert.That(driver.Url, Does.Contain("/inventory-item.html"));
+    }
 }
