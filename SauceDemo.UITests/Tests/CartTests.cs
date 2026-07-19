@@ -17,12 +17,12 @@ public class CartTests:BaseTest
         Login();
         
         InventoryPage inventoryPage = new InventoryPage(driver);
-        inventoryPage.AddToCartClick();
+        inventoryPage.AddToCartClick("Sauce Labs Backpack");
         inventoryPage.CartLinkClick();
         
         CartPage cartPage = new CartPage(driver);
-        cartPage.RemoveFromCartClick();
-        Assert.That(cartPage.IsItemsInCart(), Is.False);
+        cartPage.RemoveFromCartClick("Sauce Labs Backpack");
+        Assert.That(cartPage.IsItemsInCart("Sauce Labs Backpack"), Is.False);
     }
 
     [Test]
@@ -57,11 +57,11 @@ public class CartTests:BaseTest
         Login();
         
         InventoryPage inventoryPage = new InventoryPage(driver);
-        inventoryPage.AddToCartClick();
+        inventoryPage.AddToCartClick("Sauce Labs Backpack");
         inventoryPage.CartLinkClick();
         
         CartPage cartPage = new CartPage(driver);
-        cartPage.ItemNameClick();
+        cartPage.ItemNameClick("Sauce Labs Backpack");
         Assert.That(driver.Url, Does.Contain("/inventory-item.html"));
     }
 }

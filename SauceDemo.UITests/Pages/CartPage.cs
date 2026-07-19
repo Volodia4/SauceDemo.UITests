@@ -11,25 +11,25 @@ public class CartPage
         _driver = driver;
     }
     
-    private By cartElementName = By.CssSelector("[data-test='inventory-item-name']");
-    private By removeFromCartBtn = By.CssSelector("[data-test='remove-sauce-labs-backpack']");
-    private By inventoryItem = By.CssSelector("[data-test='inventory-item']");
     private By checkoutBtn = By.CssSelector("[data-test='checkout']");
     private By continueShoppingBtn = By.CssSelector("[data-test='continue-shopping']");
     
-    public string GetCartElementText()
+    public void ItemNameClick(string itemName)
     {
-        return _driver.FindElement(cartElementName).Text;
+        By specificItemName = By.XPath($"//div[@data-test='inventory-item-name' and text()='{itemName}']");
+        _driver.FindElement(specificItemName).Click();
     }
     
-    public void RemoveFromCartClick()
+    public bool IsItemsInCart(string itemName)
     {
-        _driver.FindElement(removeFromCartBtn).Click();
+        By specificItemName = By.XPath($"//div[@data-test='inventory-item-name' and text()='{itemName}']");
+        return _driver.FindElements(specificItemName).Count > 0;
     }
     
-    public bool IsItemsInCart()
+    public void RemoveFromCartClick(string itemName)
     {
-        return _driver.FindElements(inventoryItem).Count > 0;
+        By specificRemoveBtn = By.XPath($"//div[text()='{itemName}']/ancestor::div[@class='cart_item']//button[text()='Remove']");
+        _driver.FindElement(specificRemoveBtn).Click();
     }
 
     public void CheckoutClick()
@@ -40,10 +40,5 @@ public class CartPage
     public void ContinueShoppingClick()
     {
         _driver.FindElement(continueShoppingBtn).Click();
-    }
-
-    public void ItemNameClick()
-    {
-        _driver.FindElement(cartElementName).Click();
     }
 }
