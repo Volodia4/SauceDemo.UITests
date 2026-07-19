@@ -11,10 +11,34 @@ public class CartPage
         _driver = driver;
     }
     
-    private By cartElementHeader = By.CssSelector("[data-test='inventory-item-name']");
+    private By checkoutBtn = By.CssSelector("[data-test='checkout']");
+    private By continueShoppingBtn = By.CssSelector("[data-test='continue-shopping']");
     
-    public string GetCartElementText()
+    public void ItemNameClick(string itemName)
     {
-        return _driver.FindElement(cartElementHeader).Text;
+        By specificItemName = By.XPath($"//div[@data-test='inventory-item-name' and text()='{itemName}']");
+        _driver.FindElement(specificItemName).Click();
+    }
+    
+    public bool IsItemsInCart(string itemName)
+    {
+        By specificItemName = By.XPath($"//div[@data-test='inventory-item-name' and text()='{itemName}']");
+        return _driver.FindElements(specificItemName).Count > 0;
+    }
+    
+    public void RemoveFromCartClick(string itemName)
+    {
+        By specificRemoveBtn = By.XPath($"//div[text()='{itemName}']/ancestor::div[@class='cart_item']//button[text()='Remove']");
+        _driver.FindElement(specificRemoveBtn).Click();
+    }
+
+    public void CheckoutClick()
+    {
+        _driver.FindElement(checkoutBtn).Click();
+    }
+    
+    public void ContinueShoppingClick()
+    {
+        _driver.FindElement(continueShoppingBtn).Click();
     }
 }

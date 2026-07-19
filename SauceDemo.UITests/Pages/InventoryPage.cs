@@ -11,24 +11,25 @@ public class InventoryPage
         _driver = driver;
     }
     
-    private By addToCartBtn = By.CssSelector("[data-test='add-to-cart-sauce-labs-backpack']");
-    private By removeFromCartBtn = By.CssSelector("[data-test='remove-sauce-labs-backpack']");
     private By cartLinkBtn = By.CssSelector("[data-test='shopping-cart-link']");
     private By cartBadge = By.CssSelector("[data-test='shopping-cart-badge']");
     
-    public void AddToCartClick()
+    public void AddToCartClick(string itemName)
     {
-        _driver.FindElement(addToCartBtn).Click();
+        By specificAddBtn = By.XPath($"//div[text()='{itemName}']/ancestor::div[@class='inventory_item']//button[text()='Add to cart']");
+        _driver.FindElement(specificAddBtn).Click();
     }
 
-    public void RemoveFromCartClick()
+    public void RemoveFromCartClick(string itemName)
     {
-        _driver.FindElement(removeFromCartBtn).Click();
+        By specificRemoveBtn = By.XPath($"//div[text()='{itemName}']/ancestor::div[@class='inventory_item']//button[text()='Remove']");
+        _driver.FindElement(specificRemoveBtn).Click();
     }
 
-    public string GetAddToCartButtonText()
+    public bool IsAddButtonDisplayed(string itemName)
     {
-        return _driver.FindElement(addToCartBtn).Text;
+        By specificButtonText = By.XPath($"//div[text()='{itemName}']/ancestor::div[@class='inventory_item']//button[text()='Add to cart']");
+        return _driver.FindElements(specificButtonText).Count > 0;
     }
 
     public void CartLinkClick()
