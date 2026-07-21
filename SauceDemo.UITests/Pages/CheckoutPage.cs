@@ -23,6 +23,12 @@ public class CheckoutPage
         _driver.FindElement(firstNameInput).SendKeys(firstName);
         _driver.FindElement(lastNameInput).SendKeys(lastName);
         _driver.FindElement(postalCodeInput).SendKeys(postalCode);
+        _driver.FindElement(continueBtn).Click();
+    }
+
+    public bool IsErrorDisplayed()
+    {
+        return _driver.FindElements(errorMessage).Count > 0;
     }
 
     public string GetErrorMessage()
