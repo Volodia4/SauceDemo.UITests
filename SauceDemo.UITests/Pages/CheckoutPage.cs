@@ -17,6 +17,7 @@ public class CheckoutPage
     private By errorMessage = By.CssSelector("[data-test='error']");
     private By cancelBtn = By.CssSelector("[data-test='cancel']");
     private By continueBtn = By.CssSelector("[data-test='continue']");
+    private By finishBtn = By.CssSelector("[data-test='finish']");
 
     public void EnterCheckoutInfo(string firstName, string lastName, string postalCode)
     {
@@ -41,8 +42,8 @@ public class CheckoutPage
         _driver.FindElement(cancelBtn).Click();
     }
 
-    public void ContinueClick()
+    public void FinishClick()
     {
-        _driver.FindElement(continueBtn).Click();
+        _driver.FindElement(finishBtn).Click();
     }
 }

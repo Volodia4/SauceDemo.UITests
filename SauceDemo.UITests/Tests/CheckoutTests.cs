@@ -47,7 +47,7 @@ public class CheckoutTests:BaseTest
     }
     
     [Test]
-    public void CancelTest()
+    public void CancelStepOneTest()
     {
         Login();
         GoToCheckoutPage();
@@ -55,5 +55,29 @@ public class CheckoutTests:BaseTest
         CheckoutPage checkoutPage = new CheckoutPage(driver);
         checkoutPage.CancelClick();
         Assert.That(driver.Url, Does.EndWith("/cart.html"));
+    }
+    
+    [Test]
+    public void CancelStepTwoTest()
+    {
+        Login();
+        GoToCheckoutPage();
+        
+        CheckoutPage checkoutPage = new CheckoutPage(driver);
+        checkoutPage.EnterCheckoutInfo("FirstName","LastName","PostalCode");
+        checkoutPage.CancelClick();
+        Assert.That(driver.Url, Does.EndWith("/inventory.html"));
+    }
+    
+    [Test]
+    public void FinishClickTest()
+    {
+        Login();
+        GoToCheckoutPage();
+        
+        CheckoutPage checkoutPage = new CheckoutPage(driver);
+        checkoutPage.EnterCheckoutInfo("FirstName","LastName","PostalCode");
+        checkoutPage.FinishClick();
+        Assert.That(driver.Url, Does.EndWith("/checkout-complete.html"));
     }
 }
