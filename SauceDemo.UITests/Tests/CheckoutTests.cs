@@ -3,7 +3,7 @@ using SauceDemo.UITests.Pages;
 
 namespace SauceDemo.UITests.Tests;
 
-public class CheckoutTests:BaseTest
+public class CheckoutTests : BaseTest
 {
     private void Login()
     {
@@ -28,11 +28,11 @@ public class CheckoutTests:BaseTest
         Login();
         GoToCheckoutPage();
         
-        CheckoutPage checkoutPage = new CheckoutPage(driver);
+        CheckoutStepOnePage stepOnePage = new CheckoutStepOnePage(driver);
         
-        checkoutPage.EnterCheckoutInfo(firstName,lastName,postalCode);
-        Assert.That(checkoutPage.IsErrorDisplayed(), Is.True);
-        Assert.That(checkoutPage.GetErrorMessage(), Is.EqualTo(errorText));
+        stepOnePage.EnterCheckoutInfo(firstName, lastName, postalCode);
+        Assert.That(stepOnePage.IsErrorDisplayed(), Is.True);
+        Assert.That(stepOnePage.GetErrorMessage(), Is.EqualTo(errorText));
     }
     
     [Test]
@@ -41,8 +41,8 @@ public class CheckoutTests:BaseTest
         Login();
         GoToCheckoutPage();
         
-        CheckoutPage checkoutPage = new CheckoutPage(driver);
-        checkoutPage.EnterCheckoutInfo("FirstName","LastName","PostalCode");
+        CheckoutStepOnePage stepOnePage = new CheckoutStepOnePage(driver);
+        stepOnePage.EnterCheckoutInfo("FirstName", "LastName", "PostalCode");
         Assert.That(driver.Url, Does.EndWith("/checkout-step-two.html"));
     }
     
@@ -52,8 +52,8 @@ public class CheckoutTests:BaseTest
         Login();
         GoToCheckoutPage();
         
-        CheckoutPage checkoutPage = new CheckoutPage(driver);
-        checkoutPage.CancelClick();
+        CheckoutStepOnePage stepOnePage = new CheckoutStepOnePage(driver);
+        stepOnePage.CancelClick();
         Assert.That(driver.Url, Does.EndWith("/cart.html"));
     }
     
@@ -63,9 +63,11 @@ public class CheckoutTests:BaseTest
         Login();
         GoToCheckoutPage();
         
-        CheckoutPage checkoutPage = new CheckoutPage(driver);
-        checkoutPage.EnterCheckoutInfo("FirstName","LastName","PostalCode");
-        checkoutPage.CancelClick();
+        CheckoutStepOnePage stepOnePage = new CheckoutStepOnePage(driver);
+        stepOnePage.EnterCheckoutInfo("FirstName", "LastName", "PostalCode");
+        
+        CheckoutStepTwoPage stepTwoPage = new CheckoutStepTwoPage(driver);
+        stepTwoPage.CancelClick();
         Assert.That(driver.Url, Does.EndWith("/inventory.html"));
     }
     
@@ -75,9 +77,67 @@ public class CheckoutTests:BaseTest
         Login();
         GoToCheckoutPage();
         
-        CheckoutPage checkoutPage = new CheckoutPage(driver);
-        checkoutPage.EnterCheckoutInfo("FirstName","LastName","PostalCode");
-        checkoutPage.FinishClick();
+        CheckoutStepOnePage stepOnePage = new CheckoutStepOnePage(driver);
+        stepOnePage.EnterCheckoutInfo("FirstName", "LastName", "PostalCode");
+        
+        CheckoutStepTwoPage stepTwoPage = new CheckoutStepTwoPage(driver);
+        stepTwoPage.FinishClick();
         Assert.That(driver.Url, Does.EndWith("/checkout-complete.html"));
+    }
+    
+    [Test]
+    public void BackClickTest()
+    {
+        Login();
+        GoToCheckoutPage();
+        
+        CheckoutStepOnePage stepOnePage = new CheckoutStepOnePage(driver);
+        stepOnePage.EnterCheckoutInfo("FirstName", "LastName", "PostalCode");
+        
+        CheckoutStepTwoPage stepTwoPage = new CheckoutStepTwoPage(driver);
+        stepTwoPage.FinishClick();
+        
+        CheckoutCompletePage completePage = new CheckoutCompletePage(driver);
+        completePage.BackClick();
+        Assert.That(driver.Url, Does.EndWith("/inventory.html"));
+    }
+    
+    [Test]
+    public void DownloadPdfTest()
+    {
+        Login();
+        GoToCheckoutPage();
+        
+        CheckoutStepOnePage stepOnePage = new CheckoutStepOnePage(driver);
+        stepOnePage.EnterCheckoutInfo("FirstName", "LastName", "PostalCode");
+        
+        CheckoutStepTwoPage stepTwoPage = new CheckoutStepTwoPage(driver);
+        stepTwoPage.FinishClick();
+
+        if (Directory.Exists(downloadPath))
+        {
+            var oldFiles = Directory.GetFiles(downloadPath, "*.pdf");
+            foreach (var oldFile in oldFiles)
+            {
+                File.Delete(oldFile);
+            }
+        }
+        
+        CheckoutCompletePage completePage = new CheckoutCompletePage(driver);
+        completePage.GeneratePdfClick();
+
+        bool isFileDownloaded = false;
+
+        for (int i = 0; i < 5; i++)
+        {
+            if (Directory.GetFiles(downloadPath, "*.pdf").Length > 0)
+            {
+                isFileDownloaded = true;
+                break;
+            }
+            Thread.Sleep(1000);
+        }
+        
+        Assert.That(isFileDownloaded, Is.True);
     }
 }

@@ -2,11 +2,11 @@ using OpenQA.Selenium;
 
 namespace SauceDemo.UITests.Pages;
 
-public class CheckoutPage
+public class CheckoutStepOnePage
 {
     private IWebDriver _driver;
 
-    public CheckoutPage(IWebDriver driver)
+    public CheckoutStepOnePage(IWebDriver driver)
     {
         _driver = driver;
     }
@@ -17,7 +17,6 @@ public class CheckoutPage
     private By errorMessage = By.CssSelector("[data-test='error']");
     private By cancelBtn = By.CssSelector("[data-test='cancel']");
     private By continueBtn = By.CssSelector("[data-test='continue']");
-    private By finishBtn = By.CssSelector("[data-test='finish']");
 
     public void EnterCheckoutInfo(string firstName, string lastName, string postalCode)
     {
@@ -40,10 +39,5 @@ public class CheckoutPage
     public void CancelClick()
     {
         _driver.FindElement(cancelBtn).Click();
-    }
-
-    public void FinishClick()
-    {
-        _driver.FindElement(finishBtn).Click();
     }
 }
