@@ -39,7 +39,7 @@ public class InventoryTests:BaseTest
         Assert.That(inventoryPage.IsCartBadgeDisplayed(), Is.False);
         Assert.That(inventoryPage.IsAddButtonDisplayed("Sauce Labs Backpack"), Is.True);
     }
-
+    
     [Test]
     public void SortItemsByNameAToZTest()
     {
@@ -100,5 +100,15 @@ public class InventoryTests:BaseTest
         expectedPrices.Sort();
         expectedPrices.Reverse();
         Assert.That(actualPrices, Is.EqualTo(expectedPrices));
+    }
+    
+    [Test]
+    public void ItemNameClickTest()
+    {
+        Login();
+        
+        InventoryPage inventoryPage = new InventoryPage(driver);
+        inventoryPage.ItemNameClick("Sauce Labs Backpack");
+        Assert.That(driver.Url, Does.Contain("/inventory-item.html"));
     }
 }
