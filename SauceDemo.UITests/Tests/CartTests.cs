@@ -5,16 +5,10 @@ namespace SauceDemo.UITests.Tests;
 
 public class CartTests:BaseTest
 {
-    private void Login()
-    {
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.LoginAs("standard_user","secret_sauce");
-    }
-
     [Test]
     public void RemoveFromCartTest()
     {
-        Login();
+        PerformDefaultLogin();
         
         InventoryPage inventoryPage = new InventoryPage(driver);
         inventoryPage.AddToCartClick("Sauce Labs Backpack");
@@ -28,7 +22,7 @@ public class CartTests:BaseTest
     [Test]
     public void CheckoutTest()
     {
-        Login();
+        PerformDefaultLogin();
         
         InventoryPage inventoryPage = new InventoryPage(driver);
         inventoryPage.CartLinkClick();
@@ -41,7 +35,7 @@ public class CartTests:BaseTest
     [Test]
     public void ContinueShoppingTest()
     {
-        Login();
+        PerformDefaultLogin();
         
         InventoryPage inventoryPage = new InventoryPage(driver);
         inventoryPage.CartLinkClick();
@@ -54,7 +48,7 @@ public class CartTests:BaseTest
     [Test]
     public void CartElementClickTest()
     {
-        Login();
+        PerformDefaultLogin();
         
         InventoryItemPage inventoryItemPage = new InventoryItemPage(driver);
         InventoryPage inventoryPage = new InventoryPage(driver);
