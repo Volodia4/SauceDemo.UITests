@@ -5,12 +5,6 @@ namespace SauceDemo.UITests.Tests;
 
 public class CheckoutTests : BaseTest
 {
-    private void Login()
-    {
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.LoginAs("standard_user", "secret_sauce");
-    }
-    
     private void GoToCheckoutPage()
     {
         InventoryPage inventoryPage = new InventoryPage(driver);
@@ -25,7 +19,7 @@ public class CheckoutTests : BaseTest
     [TestCase("FirstName","LastName","","Error: Postal Code is required")]
     public void InputInfoErrorTest(string firstName, string lastName, string postalCode, string errorText)
     {
-        Login();
+        PerformDefaultLogin();
         GoToCheckoutPage();
         
         CheckoutStepOnePage stepOnePage = new CheckoutStepOnePage(driver);
@@ -38,7 +32,7 @@ public class CheckoutTests : BaseTest
     [Test]
     public void InputInfoSuccessTest()
     {
-        Login();
+        PerformDefaultLogin();
         GoToCheckoutPage();
         
         CheckoutStepOnePage stepOnePage = new CheckoutStepOnePage(driver);
@@ -49,7 +43,7 @@ public class CheckoutTests : BaseTest
     [Test]
     public void CancelStepOneTest()
     {
-        Login();
+        PerformDefaultLogin();
         GoToCheckoutPage();
         
         CheckoutStepOnePage stepOnePage = new CheckoutStepOnePage(driver);
@@ -60,7 +54,7 @@ public class CheckoutTests : BaseTest
     [Test]
     public void CancelStepTwoTest()
     {
-        Login();
+        PerformDefaultLogin();
         GoToCheckoutPage();
         
         CheckoutStepOnePage stepOnePage = new CheckoutStepOnePage(driver);
@@ -74,7 +68,7 @@ public class CheckoutTests : BaseTest
     [Test]
     public void FinishClickTest()
     {
-        Login();
+        PerformDefaultLogin();
         GoToCheckoutPage();
         
         CheckoutStepOnePage stepOnePage = new CheckoutStepOnePage(driver);
@@ -88,7 +82,7 @@ public class CheckoutTests : BaseTest
     [Test]
     public void BackClickTest()
     {
-        Login();
+        PerformDefaultLogin();
         GoToCheckoutPage();
         
         CheckoutStepOnePage stepOnePage = new CheckoutStepOnePage(driver);
@@ -105,7 +99,7 @@ public class CheckoutTests : BaseTest
     [Test]
     public void DownloadPdfTest()
     {
-        Login();
+        PerformDefaultLogin();
         GoToCheckoutPage();
         
         CheckoutStepOnePage stepOnePage = new CheckoutStepOnePage(driver);

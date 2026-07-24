@@ -5,16 +5,10 @@ namespace SauceDemo.UITests.Tests;
 
 public class InventoryTests:BaseTest
 {
-    private void Login()
-    {
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.LoginAs("standard_user","secret_sauce");
-    }
-    
     [Test]
     public void AddToCartTest()
     {
-        Login();
+        PerformDefaultLogin();
         
         InventoryPage inventoryPage = new InventoryPage(driver);
         CartPage cartPage = new CartPage(driver);
@@ -30,7 +24,7 @@ public class InventoryTests:BaseTest
     [Test]
     public void RemoveFromCartTest()
     {
-        Login();
+        PerformDefaultLogin();
         
         InventoryPage inventoryPage = new InventoryPage(driver);
         
@@ -43,7 +37,7 @@ public class InventoryTests:BaseTest
     [Test]
     public void SortItemsByNameAToZTest()
     {
-        Login();
+        PerformDefaultLogin();
         
         InventoryPage inventoryPage = new InventoryPage(driver);
         
@@ -58,7 +52,7 @@ public class InventoryTests:BaseTest
     [Test]
     public void SortItemsByNameZToATest()
     {
-        Login();
+        PerformDefaultLogin();
         
         InventoryPage inventoryPage = new InventoryPage(driver);
         
@@ -74,7 +68,7 @@ public class InventoryTests:BaseTest
     [Test]
     public void SortItemsByPriceLowToHighTest()
     {
-        Login();
+        PerformDefaultLogin();
         
         InventoryPage inventoryPage = new InventoryPage(driver);
         
@@ -89,7 +83,7 @@ public class InventoryTests:BaseTest
     [Test]
     public void SortItemsByPriceHighToLowTest()
     {
-        Login();
+        PerformDefaultLogin();
         
         InventoryPage inventoryPage = new InventoryPage(driver);
         
@@ -105,7 +99,7 @@ public class InventoryTests:BaseTest
     [Test]
     public void ItemNameClickTest()
     {
-        Login();
+        PerformDefaultLogin();
         
         InventoryItemPage inventoryItemPage = new InventoryItemPage(driver);
         InventoryPage inventoryPage = new InventoryPage(driver);

@@ -1,5 +1,6 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using SauceDemo.UITests.Pages;
 
 namespace SauceDemo.UITests.Core;
 
@@ -7,6 +8,12 @@ public class BaseTest
 {
     protected IWebDriver driver;
     protected string downloadPath;
+    
+    protected void PerformDefaultLogin()
+    {
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.LoginAs("standard_user", "secret_sauce");
+    }
 
     [SetUp]
     public void Setup()
