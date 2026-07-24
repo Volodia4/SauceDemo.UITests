@@ -39,4 +39,66 @@ public class InventoryTests:BaseTest
         Assert.That(inventoryPage.IsCartBadgeDisplayed(), Is.False);
         Assert.That(inventoryPage.IsAddButtonDisplayed("Sauce Labs Backpack"), Is.True);
     }
+
+    [Test]
+    public void SortItemsByNameAToZTest()
+    {
+        Login();
+        
+        InventoryPage inventoryPage = new InventoryPage(driver);
+        
+        inventoryPage.SelectSortOption("Name (A to Z)");
+        List<string> actualNames = inventoryPage.GetItemNames();
+        
+        List<string> expectedNames = new List<string>(actualNames);
+        expectedNames.Sort();
+        Assert.That(actualNames, Is.EqualTo(expectedNames));
+    }
+
+    [Test]
+    public void SortItemsByNameZToATest()
+    {
+        Login();
+        
+        InventoryPage inventoryPage = new InventoryPage(driver);
+        
+        inventoryPage.SelectSortOption("Name (Z to A)");
+        List<string> actualNames = inventoryPage.GetItemNames();
+        
+        List<string> expectedNames = new List<string>(actualNames);
+        expectedNames.Sort();
+        expectedNames.Reverse();
+        Assert.That(actualNames, Is.EqualTo(expectedNames));
+    }
+
+    [Test]
+    public void SortItemsByPriceLowToHighTest()
+    {
+        Login();
+        
+        InventoryPage inventoryPage = new InventoryPage(driver);
+        
+        inventoryPage.SelectSortOption("Price (low to high)");
+        List<decimal> actualPrices = inventoryPage.GetItemPrices();
+        
+        List<decimal> expectedPrices = new List<decimal>(actualPrices);
+        expectedPrices.Sort();
+        Assert.That(actualPrices, Is.EqualTo(expectedPrices));
+    }
+
+    [Test]
+    public void SortItemsByPriceHighToLowTest()
+    {
+        Login();
+        
+        InventoryPage inventoryPage = new InventoryPage(driver);
+        
+        inventoryPage.SelectSortOption("Price (high to low)");
+        List<decimal> actualPrices = inventoryPage.GetItemPrices();
+        
+        List<decimal> expectedPrices = new List<decimal>(actualPrices);
+        expectedPrices.Sort();
+        expectedPrices.Reverse();
+        Assert.That(actualPrices, Is.EqualTo(expectedPrices));
+    }
 }
