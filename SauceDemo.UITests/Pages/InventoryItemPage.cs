@@ -13,7 +13,6 @@ public class InventoryItemPage
     
     private By addToCartBtn = By.CssSelector("[data-test='add-to-cart']");
     private By removeFromCartBtn = By.CssSelector("[data-test='remove']");
-    private By cartBadge = By.CssSelector("[data-test='shopping-cart-badge']");
     private By backBtn = By.CssSelector("[data-test='back-to-products']");
     private By itemName = By.CssSelector("[data-test='inventory-item-name']");
 
@@ -35,16 +34,6 @@ public class InventoryItemPage
     public bool IsRemovingBtnDisplayed()
     {
         return _driver.FindElements(removeFromCartBtn).Count > 0;
-    }
-    
-    public bool IsCartBadgeDisplayed()
-    {
-        return _driver.FindElements(cartBadge).Count > 0;
-    }
-    
-    public string GetCartBadgeText()
-    {
-        return _driver.FindElement(cartBadge).Text;
     }
 
     public void BackClick()

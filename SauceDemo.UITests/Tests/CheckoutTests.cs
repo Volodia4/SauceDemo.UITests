@@ -1,3 +1,5 @@
+using OpenQA.Selenium.Support.UI;
+using SauceDemo.UITests.Components;
 using SauceDemo.UITests.Core;
 using SauceDemo.UITests.Pages;
 
@@ -8,7 +10,10 @@ public class CheckoutTests : BaseTest
     private void GoToCheckoutPage()
     {
         InventoryPage inventoryPage = new InventoryPage(driver);
-        inventoryPage.CartLinkClick();
+        inventoryPage.AddToCartClick("Sauce Labs Backpack");
+        
+        HeaderComponent headerComponent = new HeaderComponent(driver);
+        headerComponent.CartLinkClick();
         
         CartPage cartPage = new CartPage(driver);
         cartPage.CheckoutClick();
@@ -120,18 +125,9 @@ public class CheckoutTests : BaseTest
         CheckoutCompletePage completePage = new CheckoutCompletePage(driver);
         completePage.GeneratePdfClick();
 
-        bool isFileDownloaded = false;
+        WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+        bool isFileDownloaded = wait.Until(d => Directory.GetFiles(downloadPath, "*.pdf").Length > 0);
 
-        for (int i = 0; i < 5; i++)
-        {
-            if (Directory.GetFiles(downloadPath, "*.pdf").Length > 0)
-            {
-                isFileDownloaded = true;
-                break;
-            }
-            Thread.Sleep(1000);
-        }
-        
         Assert.That(isFileDownloaded, Is.True);
     }
 }

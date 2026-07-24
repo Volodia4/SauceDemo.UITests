@@ -1,3 +1,4 @@
+using SauceDemo.UITests.Components;
 using SauceDemo.UITests.Core;
 using SauceDemo.UITests.Pages;
 
@@ -12,7 +13,9 @@ public class CartTests:BaseTest
         
         InventoryPage inventoryPage = new InventoryPage(driver);
         inventoryPage.AddToCartClick("Sauce Labs Backpack");
-        inventoryPage.CartLinkClick();
+        
+        HeaderComponent headerComponent = new HeaderComponent(driver);
+        headerComponent.CartLinkClick();
         
         CartPage cartPage = new CartPage(driver);
         cartPage.RemoveFromCartClick("Sauce Labs Backpack");
@@ -24,8 +27,8 @@ public class CartTests:BaseTest
     {
         PerformDefaultLogin();
         
-        InventoryPage inventoryPage = new InventoryPage(driver);
-        inventoryPage.CartLinkClick();
+        HeaderComponent headerComponent = new HeaderComponent(driver);
+        headerComponent.CartLinkClick();
         
         CartPage cartPage = new CartPage(driver);
         cartPage.CheckoutClick();
@@ -37,8 +40,8 @@ public class CartTests:BaseTest
     {
         PerformDefaultLogin();
         
-        InventoryPage inventoryPage = new InventoryPage(driver);
-        inventoryPage.CartLinkClick();
+        HeaderComponent headerComponent = new HeaderComponent(driver);
+        headerComponent.CartLinkClick();
         
         CartPage cartPage = new CartPage(driver);
         cartPage.ContinueShoppingClick();
@@ -53,7 +56,9 @@ public class CartTests:BaseTest
         InventoryItemPage inventoryItemPage = new InventoryItemPage(driver);
         InventoryPage inventoryPage = new InventoryPage(driver);
         inventoryPage.AddToCartClick("Sauce Labs Backpack");
-        inventoryPage.CartLinkClick();
+        
+        HeaderComponent headerComponent = new HeaderComponent(driver);
+        headerComponent.CartLinkClick();
         
         CartPage cartPage = new CartPage(driver);
         cartPage.ItemNameClick("Sauce Labs Backpack");

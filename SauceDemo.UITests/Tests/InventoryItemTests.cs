@@ -1,3 +1,4 @@
+using SauceDemo.UITests.Components;
 using SauceDemo.UITests.Core;
 using SauceDemo.UITests.Pages;
 
@@ -16,8 +17,10 @@ public class InventoryItemTests:BaseTest
         InventoryItemPage inventoryItemPage = new InventoryItemPage(driver);
         inventoryItemPage.AddToCartClick();
         Assert.That(inventoryItemPage.IsRemovingBtnDisplayed(), Is.True);
-        Assert.That(inventoryItemPage.IsCartBadgeDisplayed(), Is.True);
-        Assert.That(inventoryItemPage.GetCartBadgeText(), Is.EqualTo("1"));
+        
+        HeaderComponent headerComponent = new HeaderComponent(driver);
+        Assert.That(headerComponent.IsCartBadgeDisplayed(), Is.True);
+        Assert.That(headerComponent.GetCartBadgeText(), Is.EqualTo("1"));
     }
 
     [Test]
@@ -32,7 +35,9 @@ public class InventoryItemTests:BaseTest
         inventoryItemPage.AddToCartClick();
         inventoryItemPage.RemoveFromCartClick();
         Assert.That(inventoryItemPage.IsAddingBtnDisplayed(), Is.True);
-        Assert.That(inventoryItemPage.IsCartBadgeDisplayed(), Is.False);
+        
+        HeaderComponent headerComponent = new HeaderComponent(driver);
+        Assert.That(headerComponent.IsCartBadgeDisplayed(), Is.False);
     }
     
     [Test]

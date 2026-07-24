@@ -13,8 +13,6 @@ public class InventoryPage
         _driver = driver;
     }
     
-    private By cartLinkBtn = By.CssSelector("[data-test='shopping-cart-link']");
-    private By cartBadge = By.CssSelector("[data-test='shopping-cart-badge']");
     private By sortDropdown = By.CssSelector("[data-test='product-sort-container']");
     private By itemNames = By.CssSelector("[data-test='inventory-item-name']");
     private By itemPrices = By.CssSelector("[data-test='inventory-item-price']");
@@ -36,26 +34,17 @@ public class InventoryPage
         By specificButtonText = By.XPath($"//div[text()='{itemName}']/ancestor::div[@class='inventory_item']//button[text()='Add to cart']");
         return _driver.FindElements(specificButtonText).Count > 0;
     }
+
+    public bool IsRemoveButtonDisplayed(string itemName)
+    {
+        By specificButtonText = By.XPath($"//div[text()='{itemName}']/ancestor::div[@class='inventory_item']//button[text()='Remove']");
+        return _driver.FindElements(specificButtonText).Count > 0;
+    }
     
     public void ItemNameClick(string itemName)
     {
         By specificItemName = By.XPath($"//div[@data-test='inventory-item-name' and text()='{itemName}']");
         _driver.FindElement(specificItemName).Click();
-    }
-
-    public void CartLinkClick()
-    {
-        _driver.FindElement(cartLinkBtn).Click();
-    }
-
-    public bool IsCartBadgeDisplayed()
-    {
-        return _driver.FindElements(cartBadge).Count > 0;
-    }
-    
-    public string GetCartBadgeText()
-    {
-        return _driver.FindElement(cartBadge).Text;
     }
 
     public void SelectSortOption(string sortOption)
