@@ -107,8 +107,10 @@ public class InventoryTests:BaseTest
     {
         Login();
         
+        InventoryItemPage inventoryItemPage = new InventoryItemPage(driver);
         InventoryPage inventoryPage = new InventoryPage(driver);
         inventoryPage.ItemNameClick("Sauce Labs Backpack");
         Assert.That(driver.Url, Does.Contain("/inventory-item.html"));
+        Assert.That(inventoryItemPage.GetItemName(), Is.EqualTo("Sauce Labs Backpack"));
     }
 }

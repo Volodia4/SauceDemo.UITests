@@ -56,6 +56,7 @@ public class CartTests:BaseTest
     {
         Login();
         
+        InventoryItemPage inventoryItemPage = new InventoryItemPage(driver);
         InventoryPage inventoryPage = new InventoryPage(driver);
         inventoryPage.AddToCartClick("Sauce Labs Backpack");
         inventoryPage.CartLinkClick();
@@ -63,5 +64,6 @@ public class CartTests:BaseTest
         CartPage cartPage = new CartPage(driver);
         cartPage.ItemNameClick("Sauce Labs Backpack");
         Assert.That(driver.Url, Does.Contain("/inventory-item.html"));
+        Assert.That(inventoryItemPage.GetItemName(), Is.EqualTo("Sauce Labs Backpack"));
     }
 }
