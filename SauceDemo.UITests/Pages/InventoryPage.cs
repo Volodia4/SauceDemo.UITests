@@ -1,4 +1,6 @@
+using System.Globalization;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 namespace SauceDemo.UITests.Pages;
 
@@ -13,6 +15,9 @@ public class InventoryPage
     
     private By cartLinkBtn = By.CssSelector("[data-test='shopping-cart-link']");
     private By cartBadge = By.CssSelector("[data-test='shopping-cart-badge']");
+    private By sortDropdown = By.CssSelector("[data-test='product-sort-container']");
+    private By itemNames = By.CssSelector("[data-test='inventory-item-name']");
+    private By itemPrices = By.CssSelector("[data-test='inventory-item-price']");
     
     public void AddToCartClick(string itemName)
     {
@@ -45,5 +50,23 @@ public class InventoryPage
     public string GetCartBadgeText()
     {
         return _driver.FindElement(cartBadge).Text;
+    }
+
+    public void SelectSortOption(string sortOption)
+    {
+        var select = new SelectElement(_driver.FindElement(sortDropdown));
+        select.SelectByText(sortOption);
+    }
+
+    public List<string> GetItemNames()
+    {
+        var elements = _driver.FindElements(itemNames);
+        return elements.Select(e => e.Text).ToList();
+    }
+
+    public List<decimal> GetItemPrices()
+    {
+        var elements = _driver.FindElements(itemPrices);
+        return elements.Select(e => decimal.Parse(e.Text.Replace("$", ""), CultureInfo.InvariantCulture)).ToList();
     }
 }
