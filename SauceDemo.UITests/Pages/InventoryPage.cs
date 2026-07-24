@@ -36,6 +36,12 @@ public class InventoryPage
         By specificButtonText = By.XPath($"//div[text()='{itemName}']/ancestor::div[@class='inventory_item']//button[text()='Add to cart']");
         return _driver.FindElements(specificButtonText).Count > 0;
     }
+    
+    public void ItemNameClick(string itemName)
+    {
+        By specificItemName = By.XPath($"//div[@data-test='inventory-item-name' and text()='{itemName}']");
+        _driver.FindElement(specificItemName).Click();
+    }
 
     public void CartLinkClick()
     {
