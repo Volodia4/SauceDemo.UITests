@@ -1,4 +1,5 @@
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 namespace SauceDemo.UITests.Pages;
 
@@ -26,5 +27,18 @@ public class LoginPage
     public string GetErrorMessage()
     {
         return _driver.FindElement(errorMessage).Text;
+    }
+
+    public bool IsLoggedOut()
+    {
+        try
+        {
+            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(5));
+            return wait.Until(d => d.FindElement(loginButton).Displayed);
+        }
+        catch (WebDriverTimeoutException)
+        {
+            return false;
+        }
     }
 }
