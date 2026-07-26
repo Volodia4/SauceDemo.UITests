@@ -64,4 +64,17 @@ public class InventoryPage
         var elements = _driver.FindElements(itemPrices);
         return elements.Select(e => decimal.Parse(e.Text.Replace("$", ""), CultureInfo.InvariantCulture)).ToList();
     }
+
+    public bool IsPageLoaded()
+    {
+        try
+        {
+            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(5));
+            return wait.Until(d => d.Url.EndsWith("/inventory.html"));
+        }
+        catch (WebDriverTimeoutException)
+        {
+            return false;
+        }
+    }
 }
