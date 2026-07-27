@@ -31,7 +31,6 @@ public class BaseTest
         
         driver = new ChromeDriver(options);
         driver.Manage().Window.Maximize();
-        driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
         driver.Navigate().GoToUrl("https://www.saucedemo.com");
     }
 
