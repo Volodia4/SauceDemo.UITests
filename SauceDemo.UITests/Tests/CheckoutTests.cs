@@ -106,28 +106,15 @@ public class CheckoutTests : BaseTest
     {
         PerformDefaultLogin();
         GoToCheckoutPage();
-        
+    
         CheckoutStepOnePage stepOnePage = new CheckoutStepOnePage(driver);
         stepOnePage.EnterCheckoutInfo("FirstName", "LastName", "PostalCode");
-        
+    
         CheckoutStepTwoPage stepTwoPage = new CheckoutStepTwoPage(driver);
         stepTwoPage.FinishClick();
 
-        if (Directory.Exists(downloadPath))
-        {
-            var oldFiles = Directory.GetFiles(downloadPath, "*.pdf");
-            foreach (var oldFile in oldFiles)
-            {
-                File.Delete(oldFile);
-            }
-        }
-        
         CheckoutCompletePage completePage = new CheckoutCompletePage(driver);
         completePage.GeneratePdfClick();
-
-        WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
-        bool isFileDownloaded = wait.Until(d => Directory.GetFiles(downloadPath, "*.pdf").Length > 0);
-
-        Assert.That(isFileDownloaded, Is.True);
+        Assert.That(completePage.IsPdfDownloaded(downloadPath), Is.True);
     }
 }

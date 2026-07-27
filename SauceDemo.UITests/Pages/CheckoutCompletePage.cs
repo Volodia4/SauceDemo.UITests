@@ -1,4 +1,5 @@
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 namespace SauceDemo.UITests.Pages;
 
@@ -22,5 +23,18 @@ public class CheckoutCompletePage
     public void GeneratePdfClick()
     {
         _driver.FindElement(generatePdfBtn).Click();
+    }
+
+    public bool IsPdfDownloaded(string downloadPath)
+    {
+        try
+        {
+            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(5));
+            return wait.Until(d => Directory.GetFiles(downloadPath, "*.pdf").Length > 0);
+        }
+        catch (WebDriverTimeoutException)
+        {
+            return false;
+        }
     }
 }
