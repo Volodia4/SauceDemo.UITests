@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Configuration;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using SauceDemo.UITests.Pages;
@@ -8,16 +9,25 @@ public class BaseTest
 {
     protected IWebDriver driver;
     protected string downloadPath;
+    protected IConfigurationRoot config;
     
     protected void PerformDefaultLogin()
     {
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.LoginAs("standard_user", "secret_sauce");
+        loginPage.LoginAs(config["Credentials:Username"], config["Credentials:Password"]);
     }
 
     [SetUp]
     public void Setup()
     {
+        config = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .Build();
+        
+        string browser = config["Browser"];
+        bool isHeadless = bool.Parse(config["Headless"]);
+        
         downloadPath = Path.Combine(Directory.GetCurrentDirectory(),"Downloads");
         if (!Directory.Exists(downloadPath))
         {
@@ -28,10 +38,18 @@ public class BaseTest
         options.AddUserProfilePreference("download.default_directory", downloadPath);
         options.AddUserProfilePreference("download.prompt_for_download", false);
         options.AddUserProfilePreference("plugins.always_open_pdf_externally", true);
+
+        if (isHeadless)
+        {
+            options.AddArguments("--headless");
+            options.AddArguments("--window-size=1920,1080");
+        }
+
+        if (browser.ToLower() == "chrome") driver = new ChromeDriver(options);
+        else throw new Exception($"Browser {browser} not supported");
         
-        driver = new ChromeDriver(options);
         driver.Manage().Window.Maximize();
-        driver.Navigate().GoToUrl("https://www.saucedemo.com");
+        driver.Navigate().GoToUrl(config["BaseURL"]);
     }
 
     [TearDown]

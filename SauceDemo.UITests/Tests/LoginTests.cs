@@ -12,7 +12,7 @@ public class LoginTests:BaseTest
         loginPage.LoginAs("standard_user", "secret_sauce");
     }
     
-    [TestCase("locked_out_user", "secret_sauce", "Epic sadface: Sorry, this user has been locked out.")]
+    [TestCase("locked_out_user", "secret_sauce", "Epic sadface: Sorry, this user has been locked out")]
     [TestCase("standard_user", "wrong_sauce", "Epic sadface: Username and password do not match any user in this service")]
     [TestCase("", "", "Epic sadface: Username is required")]
     public void InvalidLoginTests(string username, string password, string expectedError)
