@@ -1,4 +1,5 @@
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 namespace SauceDemo.UITests.Pages;
 
@@ -44,5 +45,18 @@ public class InventoryItemPage
     public string GetItemName()
     {
         return _driver.FindElement(itemName).Text;
+    }
+
+    public bool IsPageLoaded()
+    {
+        try
+        {
+            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(5));
+            return wait.Until(d => d.Url.Contains("/inventory-item.html"));
+        }
+        catch (WebDriverTimeoutException)
+        {
+            return false;
+        }
     }
 }

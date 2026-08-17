@@ -75,7 +75,7 @@ public class HeaderTests:BaseTest
         PerformDefaultLogin();
         
         InventoryPage inventoryPage = new InventoryPage(driver);
-        inventoryPage.AddToCartClick("Sauce Labs Backpack");
+        inventoryPage.AddToCartClick(config["Inventory:TargetItemName"]);
         
         HeaderComponent headerComponent = new HeaderComponent(driver);
         Assert.That(headerComponent.IsCartBadgeDisplayed(), Is.True);

@@ -1,0 +1,54 @@
+{
+  "InvalidLogins": [
+    {
+      "Username": "locked_out_user",
+      "Password": "secret_sauce",
+      "ExpectedError": "Epic sadface: Sorry, this user has been locked out."
+    },
+    {
+      "Username": "standard_user",
+      "Password": "wrong_sauce",
+      "ExpectedError": "Epic sadface: Username and password do not match any user in this service"
+    },
+    {
+      "Username": "",
+      "Password": "",
+      "ExpectedError": "Epic sadface: Username is required"
+    }
+  ],
+  
+  "Inventory": {
+    "TargetItemName": "Sauce Labs Backpack",
+    "SortOptionAZ": "Name (A to Z)",
+    "SortOptionZA": "Name (Z to A)",
+    "SortOptionLoHi": "Price (low to high)",
+    "SortOptionHiLo": "Price (high to low)"
+  },
+  
+  "InvalidCheckoutInputData": [
+    {
+      "FirstName": "",
+      "LastName": "",
+      "PostalCode": "",
+      "ErrorText": "Error: First Name is required"
+    },
+    {
+      "FirstName": "FirstName",
+      "LastName": "",
+      "PostalCode": "",
+      "ErrorText": "Error: Last Name is required"
+    },
+    {
+      "FirstName": "FirstName",
+      "LastName": "LastName",
+      "PostalCode": "",
+      "ErrorText": "Error: Postal Code is required"
+    }
+  ],
+  
+  "ValidCheckoutInputData": {
+    "FirstName": "FirstName",
+    "LastName": "LastName",
+    "PostalCode": "PostalCode"
+  }
+}

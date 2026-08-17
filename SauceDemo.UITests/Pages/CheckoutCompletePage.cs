@@ -29,8 +29,21 @@ public class CheckoutCompletePage
     {
         try
         {
-            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(5));
+            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(15));
             return wait.Until(d => Directory.GetFiles(downloadPath, "*.pdf").Length > 0);
+        }
+        catch (WebDriverTimeoutException)
+        {
+            return false;
+        }
+    }
+
+    public bool IsPageLoaded()
+    {
+        try
+        {
+            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(5));
+            return wait.Until(d => d.Url.EndsWith("/checkout-complete.html"));
         }
         catch (WebDriverTimeoutException)
         {

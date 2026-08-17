@@ -12,7 +12,7 @@ public class InventoryItemTests:BaseTest
         PerformDefaultLogin();
         
         InventoryPage inventoryPage = new InventoryPage(driver);
-        inventoryPage.ItemNameClick("Sauce Labs Backpack");
+        inventoryPage.ItemNameClick(config["Inventory:TargetItemName"]);
         
         InventoryItemPage inventoryItemPage = new InventoryItemPage(driver);
         inventoryItemPage.AddToCartClick();
@@ -29,7 +29,7 @@ public class InventoryItemTests:BaseTest
         PerformDefaultLogin();
         
         InventoryPage inventoryPage = new InventoryPage(driver);
-        inventoryPage.ItemNameClick("Sauce Labs Backpack");
+        inventoryPage.ItemNameClick(config["Inventory:TargetItemName"]);
         
         InventoryItemPage inventoryItemPage = new InventoryItemPage(driver);
         inventoryItemPage.AddToCartClick();
@@ -46,10 +46,10 @@ public class InventoryItemTests:BaseTest
         PerformDefaultLogin();
         
         InventoryPage inventoryPage = new InventoryPage(driver);
-        inventoryPage.ItemNameClick("Sauce Labs Backpack");
+        inventoryPage.ItemNameClick(config["Inventory:TargetItemName"]);
         
         InventoryItemPage inventoryItemPage = new InventoryItemPage(driver);
         inventoryItemPage.BackClick();
-        Assert.That(driver.Url, Does.EndWith("/inventory.html"));
+        Assert.That(inventoryPage.IsPageLoaded(), Is.True);
     }
 }

@@ -23,6 +23,7 @@ public class BaseTest
         config = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .AddJsonFile("testdata.json", optional: false, reloadOnChange: true)
             .Build();
         
         string browser = config["Browser"];

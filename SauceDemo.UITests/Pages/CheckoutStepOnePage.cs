@@ -1,4 +1,5 @@
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 namespace SauceDemo.UITests.Pages;
 
@@ -39,5 +40,18 @@ public class CheckoutStepOnePage
     public void CancelClick()
     {
         _driver.FindElement(cancelBtn).Click();
+    }
+
+    public bool IsPageLoaded()
+    {
+        try
+        {
+            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(5));
+            return wait.Until(d => d.Url.EndsWith("/checkout-step-one.html"));
+        }
+        catch (WebDriverTimeoutException)
+        {
+            return false;
+        }
     }
 }
