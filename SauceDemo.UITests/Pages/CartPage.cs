@@ -1,4 +1,5 @@
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 namespace SauceDemo.UITests.Pages;
 
@@ -40,5 +41,18 @@ public class CartPage
     public void ContinueShoppingClick()
     {
         _driver.FindElement(continueShoppingBtn).Click();
+    }
+
+    public bool IsPageLoaded()
+    {
+        try
+        {
+            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(5));
+            return wait.Until(d => d.Url.EndsWith("/cart.html"));
+        }
+        catch (WebDriverTimeoutException)
+        {
+            return false;
+        }
     }
 }

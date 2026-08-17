@@ -12,8 +12,8 @@ public class InventoryTests:BaseTest
         PerformDefaultLogin();
         
         InventoryPage inventoryPage = new InventoryPage(driver);
-        inventoryPage.AddToCartClick("Sauce Labs Backpack");
-        Assert.That(inventoryPage.IsRemoveButtonDisplayed("Sauce Labs Backpack"), Is.True);
+        inventoryPage.AddToCartClick(config["Inventory:TargetItemName"]);
+        Assert.That(inventoryPage.IsRemoveButtonDisplayed(config["Inventory:TargetItemName"]), Is.True);
         
         HeaderComponent headerComponent = new HeaderComponent(driver);
         Assert.That(headerComponent.IsCartBadgeDisplayed(), Is.True);
@@ -21,7 +21,7 @@ public class InventoryTests:BaseTest
         
         CartPage cartPage = new CartPage(driver);
         headerComponent.CartLinkClick();
-        Assert.That(cartPage.IsItemsInCart("Sauce Labs Backpack"), Is.True);
+        Assert.That(cartPage.IsItemsInCart(config["Inventory:TargetItemName"]), Is.True);
     }
 
     [Test]
@@ -31,9 +31,9 @@ public class InventoryTests:BaseTest
         
         InventoryPage inventoryPage = new InventoryPage(driver);
         
-        inventoryPage.AddToCartClick("Sauce Labs Backpack");
-        inventoryPage.RemoveFromCartClick("Sauce Labs Backpack");
-        Assert.That(inventoryPage.IsAddButtonDisplayed("Sauce Labs Backpack"), Is.True);
+        inventoryPage.AddToCartClick(config["Inventory:TargetItemName"]);
+        inventoryPage.RemoveFromCartClick(config["Inventory:TargetItemName"]);
+        Assert.That(inventoryPage.IsAddButtonDisplayed(config["Inventory:TargetItemName"]), Is.True);
         
         HeaderComponent headerComponent = new HeaderComponent(driver);
         Assert.That(headerComponent.IsCartBadgeDisplayed(), Is.False);
@@ -45,7 +45,7 @@ public class InventoryTests:BaseTest
         PerformDefaultLogin();
         
         InventoryPage inventoryPage = new InventoryPage(driver);
-        inventoryPage.SelectSortOption("Name (A to Z)");
+        inventoryPage.SelectSortOption(config["Inventory:SortOptionAZ"]);
         List<string> actualNames = inventoryPage.GetItemNames();
         
         List<string> expectedNames = new List<string>(actualNames);
@@ -59,7 +59,7 @@ public class InventoryTests:BaseTest
         PerformDefaultLogin();
         
         InventoryPage inventoryPage = new InventoryPage(driver);
-        inventoryPage.SelectSortOption("Name (Z to A)");
+        inventoryPage.SelectSortOption(config["Inventory:SortOptionZA"]);
         List<string> actualNames = inventoryPage.GetItemNames();
         
         List<string> expectedNames = new List<string>(actualNames);
@@ -74,7 +74,7 @@ public class InventoryTests:BaseTest
         PerformDefaultLogin();
         
         InventoryPage inventoryPage = new InventoryPage(driver);
-        inventoryPage.SelectSortOption("Price (low to high)");
+        inventoryPage.SelectSortOption(config["Inventory:SortOptionLoHi"]);
         List<decimal> actualPrices = inventoryPage.GetItemPrices();
         
         List<decimal> expectedPrices = new List<decimal>(actualPrices);
@@ -88,7 +88,7 @@ public class InventoryTests:BaseTest
         PerformDefaultLogin();
         
         InventoryPage inventoryPage = new InventoryPage(driver);
-        inventoryPage.SelectSortOption("Price (high to low)");
+        inventoryPage.SelectSortOption(config["Inventory:SortOptionHiLo"]);
         List<decimal> actualPrices = inventoryPage.GetItemPrices();
         
         List<decimal> expectedPrices = new List<decimal>(actualPrices);
@@ -103,10 +103,10 @@ public class InventoryTests:BaseTest
         PerformDefaultLogin();
         
         InventoryPage inventoryPage = new InventoryPage(driver);
-        inventoryPage.ItemNameClick("Sauce Labs Backpack");
-        Assert.That(driver.Url, Does.Contain("/inventory-item.html"));
+        inventoryPage.ItemNameClick(config["Inventory:TargetItemName"]);
         
         InventoryItemPage inventoryItemPage = new InventoryItemPage(driver);
-        Assert.That(inventoryItemPage.GetItemName(), Is.EqualTo("Sauce Labs Backpack"));
+        Assert.That(inventoryItemPage.IsPageLoaded(), Is.True);
+        Assert.That(inventoryItemPage.GetItemName(), Is.EqualTo(config["Inventory:TargetItemName"]));
     }
 }

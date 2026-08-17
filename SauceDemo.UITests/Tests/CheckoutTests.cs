@@ -1,6 +1,7 @@
-using OpenQA.Selenium.Support.UI;
+using System.Text.Json;
 using SauceDemo.UITests.Components;
 using SauceDemo.UITests.Core;
+using SauceDemo.UITests.Models;
 using SauceDemo.UITests.Pages;
 
 namespace SauceDemo.UITests.Tests;
@@ -10,7 +11,7 @@ public class CheckoutTests : BaseTest
     private void GoToCheckoutPage()
     {
         InventoryPage inventoryPage = new InventoryPage(driver);
-        inventoryPage.AddToCartClick("Sauce Labs Backpack");
+        inventoryPage.AddToCartClick(config["Inventory:TargetItemName"]);
         
         HeaderComponent headerComponent = new HeaderComponent(driver);
         headerComponent.CartLinkClick();
@@ -18,10 +19,19 @@ public class CheckoutTests : BaseTest
         CartPage cartPage = new CartPage(driver);
         cartPage.CheckoutClick();
     }
+
+    public static IEnumerable<TestCaseData> GetCheckoutInputData()
+    {
+        string json = File.ReadAllText("testdata.json");
+        var rootData = JsonSerializer.Deserialize<TestDataRoot>(json);
+        
+        foreach (var data in rootData.InvalidCheckoutInputData)
+        {
+            yield return new TestCaseData(data.FirstName, data.LastName, data.PostalCode, data.ErrorText);
+        }
+    }
     
-    [TestCase("","","","Error: First Name is required")]
-    [TestCase("FirstName","","","Error: Last Name is required")]
-    [TestCase("FirstName","LastName","","Error: Postal Code is required")]
+    [Test, TestCaseSource(nameof(GetCheckoutInputData))]
     public void InputInfoErrorTest(string firstName, string lastName, string postalCode, string errorText)
     {
         PerformDefaultLogin();
@@ -41,8 +51,14 @@ public class CheckoutTests : BaseTest
         GoToCheckoutPage();
         
         CheckoutStepOnePage stepOnePage = new CheckoutStepOnePage(driver);
-        stepOnePage.EnterCheckoutInfo("FirstName", "LastName", "PostalCode");
-        Assert.That(driver.Url, Does.EndWith("/checkout-step-two.html"));
+        stepOnePage.EnterCheckoutInfo(
+            config["ValidCheckoutInputData:FirstName"],
+            config["ValidCheckoutInputData:LastName"],
+            config["ValidCheckoutInputData:PostalCode"]
+            );
+        
+        CheckoutStepTwoPage checkoutStepTwoPage = new CheckoutStepTwoPage(driver);
+        Assert.That(checkoutStepTwoPage.IsPageLoaded(), Is.True);
     }
     
     [Test]
@@ -53,7 +69,9 @@ public class CheckoutTests : BaseTest
         
         CheckoutStepOnePage stepOnePage = new CheckoutStepOnePage(driver);
         stepOnePage.CancelClick();
-        Assert.That(driver.Url, Does.EndWith("/cart.html"));
+        
+        CartPage cartPage = new CartPage(driver);
+        Assert.That(cartPage.IsPageLoaded(), Is.True);
     }
     
     [Test]
@@ -63,11 +81,17 @@ public class CheckoutTests : BaseTest
         GoToCheckoutPage();
         
         CheckoutStepOnePage stepOnePage = new CheckoutStepOnePage(driver);
-        stepOnePage.EnterCheckoutInfo("FirstName", "LastName", "PostalCode");
+        stepOnePage.EnterCheckoutInfo(
+            config["ValidCheckoutInputData:FirstName"],
+            config["ValidCheckoutInputData:LastName"],
+            config["ValidCheckoutInputData:PostalCode"]
+        );
         
         CheckoutStepTwoPage stepTwoPage = new CheckoutStepTwoPage(driver);
         stepTwoPage.CancelClick();
-        Assert.That(driver.Url, Does.EndWith("/inventory.html"));
+        
+        InventoryPage inventoryPage = new InventoryPage(driver);
+        Assert.That(inventoryPage.IsPageLoaded(), Is.True);
     }
     
     [Test]
@@ -77,11 +101,17 @@ public class CheckoutTests : BaseTest
         GoToCheckoutPage();
         
         CheckoutStepOnePage stepOnePage = new CheckoutStepOnePage(driver);
-        stepOnePage.EnterCheckoutInfo("FirstName", "LastName", "PostalCode");
+        stepOnePage.EnterCheckoutInfo(
+            config["ValidCheckoutInputData:FirstName"],
+            config["ValidCheckoutInputData:LastName"],
+            config["ValidCheckoutInputData:PostalCode"]
+        );
         
         CheckoutStepTwoPage stepTwoPage = new CheckoutStepTwoPage(driver);
         stepTwoPage.FinishClick();
-        Assert.That(driver.Url, Does.EndWith("/checkout-complete.html"));
+        
+        CheckoutCompletePage completePage = new CheckoutCompletePage(driver);
+        Assert.That(completePage.IsPageLoaded(), Is.True);
     }
     
     [Test]
@@ -91,14 +121,20 @@ public class CheckoutTests : BaseTest
         GoToCheckoutPage();
         
         CheckoutStepOnePage stepOnePage = new CheckoutStepOnePage(driver);
-        stepOnePage.EnterCheckoutInfo("FirstName", "LastName", "PostalCode");
+        stepOnePage.EnterCheckoutInfo(
+            config["ValidCheckoutInputData:FirstName"],
+            config["ValidCheckoutInputData:LastName"],
+            config["ValidCheckoutInputData:PostalCode"]
+        );
         
         CheckoutStepTwoPage stepTwoPage = new CheckoutStepTwoPage(driver);
         stepTwoPage.FinishClick();
         
         CheckoutCompletePage completePage = new CheckoutCompletePage(driver);
         completePage.BackClick();
-        Assert.That(driver.Url, Does.EndWith("/inventory.html"));
+        
+        InventoryPage inventoryPage = new InventoryPage(driver);
+        Assert.That(inventoryPage.IsPageLoaded(), Is.True);
     }
     
     [Test]
@@ -108,7 +144,11 @@ public class CheckoutTests : BaseTest
         GoToCheckoutPage();
     
         CheckoutStepOnePage stepOnePage = new CheckoutStepOnePage(driver);
-        stepOnePage.EnterCheckoutInfo("FirstName", "LastName", "PostalCode");
+        stepOnePage.EnterCheckoutInfo(
+            config["ValidCheckoutInputData:FirstName"],
+            config["ValidCheckoutInputData:LastName"],
+            config["ValidCheckoutInputData:PostalCode"]
+        );
     
         CheckoutStepTwoPage stepTwoPage = new CheckoutStepTwoPage(driver);
         stepTwoPage.FinishClick();

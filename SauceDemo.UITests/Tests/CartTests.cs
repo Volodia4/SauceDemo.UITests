@@ -12,14 +12,14 @@ public class CartTests:BaseTest
         PerformDefaultLogin();
         
         InventoryPage inventoryPage = new InventoryPage(driver);
-        inventoryPage.AddToCartClick("Sauce Labs Backpack");
+        inventoryPage.AddToCartClick(config["Inventory:TargetItemName"]);
         
         HeaderComponent headerComponent = new HeaderComponent(driver);
         headerComponent.CartLinkClick();
         
         CartPage cartPage = new CartPage(driver);
-        cartPage.RemoveFromCartClick("Sauce Labs Backpack");
-        Assert.That(cartPage.IsItemsInCart("Sauce Labs Backpack"), Is.False);
+        cartPage.RemoveFromCartClick(config["Inventory:TargetItemName"]);
+        Assert.That(cartPage.IsItemsInCart(config["Inventory:TargetItemName"]), Is.False);
     }
 
     [Test]
@@ -32,7 +32,9 @@ public class CartTests:BaseTest
         
         CartPage cartPage = new CartPage(driver);
         cartPage.CheckoutClick();
-        Assert.That(driver.Url, Does.EndWith("/checkout-step-one.html"));
+        
+        CheckoutStepOnePage checkoutStepOnePage = new CheckoutStepOnePage(driver);
+        Assert.That(checkoutStepOnePage.IsPageLoaded(), Is.True);
     }
     
     [Test]
@@ -45,7 +47,9 @@ public class CartTests:BaseTest
         
         CartPage cartPage = new CartPage(driver);
         cartPage.ContinueShoppingClick();
-        Assert.That(driver.Url, Does.EndWith("/inventory.html"));
+        
+        InventoryPage inventoryPage = new InventoryPage(driver);
+        Assert.That(inventoryPage.IsPageLoaded(), Is.True);
     }
     
     [Test]
@@ -55,14 +59,14 @@ public class CartTests:BaseTest
         
         InventoryItemPage inventoryItemPage = new InventoryItemPage(driver);
         InventoryPage inventoryPage = new InventoryPage(driver);
-        inventoryPage.AddToCartClick("Sauce Labs Backpack");
+        inventoryPage.AddToCartClick(config["Inventory:TargetItemName"]);
         
         HeaderComponent headerComponent = new HeaderComponent(driver);
         headerComponent.CartLinkClick();
         
         CartPage cartPage = new CartPage(driver);
-        cartPage.ItemNameClick("Sauce Labs Backpack");
-        Assert.That(driver.Url, Does.Contain("/inventory-item.html"));
-        Assert.That(inventoryItemPage.GetItemName(), Is.EqualTo("Sauce Labs Backpack"));
+        cartPage.ItemNameClick(config["Inventory:TargetItemName"]);
+        Assert.That(inventoryItemPage.IsPageLoaded(), Is.True);
+        Assert.That(inventoryItemPage.GetItemName(), Is.EqualTo(config["Inventory:TargetItemName"]));
     }
 }
