@@ -61,7 +61,7 @@ public class FooterComponent
     {
         try
         {
-            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(5));
+            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
             return wait.Until(d => d.Url.Contains("https://www.linkedin.com/"));
         }
         catch (WebDriverTimeoutException)

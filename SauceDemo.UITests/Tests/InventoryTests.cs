@@ -106,7 +106,7 @@ public class InventoryTests:BaseTest
         inventoryPage.ItemNameClick(config["Inventory:TargetItemName"]);
         
         InventoryItemPage inventoryItemPage = new InventoryItemPage(driver);
-        Assert.That(inventoryItemPage.IsPageLoaded(), Is.True);
+        Assert.That(inventoryItemPage.IsPageLoaded(), Is.True, $"URL did not match. Current: {driver.Url}");
         Assert.That(inventoryItemPage.GetItemName(), Is.EqualTo(config["Inventory:TargetItemName"]));
     }
 }

@@ -50,6 +50,6 @@ public class InventoryItemTests:BaseTest
         
         InventoryItemPage inventoryItemPage = new InventoryItemPage(driver);
         inventoryItemPage.BackClick();
-        Assert.That(inventoryPage.IsPageLoaded(), Is.True);
+        Assert.That(inventoryPage.IsPageLoaded(), Is.True, $"URL did not match. Current: {driver.Url}");
     }
 }

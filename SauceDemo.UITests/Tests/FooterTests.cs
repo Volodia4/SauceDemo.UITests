@@ -15,7 +15,7 @@ public class FooterTests:BaseTest
 
         var tabs = driver.WindowHandles;
         driver.SwitchTo().Window(tabs[1]);
-        Assert.That(footerComponent.IsTwitterPageLoaded(), Is.True);
+        Assert.That(footerComponent.IsTwitterPageLoaded(), Is.True, $"URL did not match. Current: {driver.Url}");
 
         driver.Close();
         driver.SwitchTo().Window(tabs[0]);
@@ -31,7 +31,7 @@ public class FooterTests:BaseTest
 
         var tabs = driver.WindowHandles;
         driver.SwitchTo().Window(tabs[1]);
-        Assert.That(footerComponent.IsFacebookPageLoaded(), Is.True);
+        Assert.That(footerComponent.IsFacebookPageLoaded(), Is.True, $"URL did not match. Current: {driver.Url}");
 
         driver.Close();
         driver.SwitchTo().Window(tabs[0]);
@@ -47,7 +47,7 @@ public class FooterTests:BaseTest
 
         var tabs = driver.WindowHandles;
         driver.SwitchTo().Window(tabs[1]);
-        Assert.That(footerComponent.IsLinkedinPageLoaded(), Is.True);
+        Assert.That(footerComponent.IsLinkedinPageLoaded(), Is.True, $"URL did not match. Current: {driver.Url}");
 
         driver.Close();
         driver.SwitchTo().Window(tabs[0]);
