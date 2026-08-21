@@ -40,7 +40,7 @@ public class HeaderTests:BaseTest
         headerComponent.AllItemsClick();
         
         InventoryPage inventoryPage = new InventoryPage(driver);
-        Assert.That(inventoryPage.IsPageLoaded(), Is.True);
+        Assert.That(inventoryPage.IsPageLoaded(), Is.True, $"URL did not match. Current: {driver.Url}");
     }
     
     [Test]
@@ -52,7 +52,7 @@ public class HeaderTests:BaseTest
         headerComponent.BurgerMenuOpenClick();
         headerComponent.IsBurgerMenuOpen();
         headerComponent.AboutClick();
-        Assert.That(headerComponent.IsAboutPageLoaded(), Is.True);
+        Assert.That(headerComponent.IsAboutPageLoaded(), Is.True, $"URL did not match. Current: {driver.Url}");
     }
     
     [Test]

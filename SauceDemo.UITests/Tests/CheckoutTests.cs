@@ -41,7 +41,7 @@ public class CheckoutTests : BaseTest
         
         stepOnePage.EnterCheckoutInfo(firstName, lastName, postalCode);
         Assert.That(stepOnePage.IsErrorDisplayed(), Is.True);
-        Assert.That(stepOnePage.GetErrorMessage(), Is.EqualTo(errorText));
+        Assert.That(stepOnePage.GetErrorMessage(), Is.EqualTo(errorText), $"Error message did not match. Current: {stepOnePage.GetErrorMessage()}");
     }
     
     [Test]
@@ -58,7 +58,7 @@ public class CheckoutTests : BaseTest
             );
         
         CheckoutStepTwoPage checkoutStepTwoPage = new CheckoutStepTwoPage(driver);
-        Assert.That(checkoutStepTwoPage.IsPageLoaded(), Is.True);
+        Assert.That(checkoutStepTwoPage.IsPageLoaded(), Is.True, $"URL did not match. Current: {driver.Url}");
     }
     
     [Test]
@@ -71,7 +71,7 @@ public class CheckoutTests : BaseTest
         stepOnePage.CancelClick();
         
         CartPage cartPage = new CartPage(driver);
-        Assert.That(cartPage.IsPageLoaded(), Is.True);
+        Assert.That(cartPage.IsPageLoaded(), Is.True, $"URL did not match. Current: {driver.Url}");
     }
     
     [Test]
@@ -91,7 +91,7 @@ public class CheckoutTests : BaseTest
         stepTwoPage.CancelClick();
         
         InventoryPage inventoryPage = new InventoryPage(driver);
-        Assert.That(inventoryPage.IsPageLoaded(), Is.True);
+        Assert.That(inventoryPage.IsPageLoaded(), Is.True, $"URL did not match. Current: {driver.Url}");
     }
     
     [Test]
@@ -111,7 +111,7 @@ public class CheckoutTests : BaseTest
         stepTwoPage.FinishClick();
         
         CheckoutCompletePage completePage = new CheckoutCompletePage(driver);
-        Assert.That(completePage.IsPageLoaded(), Is.True);
+        Assert.That(completePage.IsPageLoaded(), Is.True, $"URL did not match. Current: {driver.Url}");
     }
     
     [Test]
@@ -134,7 +134,7 @@ public class CheckoutTests : BaseTest
         completePage.BackClick();
         
         InventoryPage inventoryPage = new InventoryPage(driver);
-        Assert.That(inventoryPage.IsPageLoaded(), Is.True);
+        Assert.That(inventoryPage.IsPageLoaded(), Is.True, $"URL did not match. Current: {driver.Url}");
     }
     
     [Test]

@@ -34,7 +34,7 @@ public class CartTests:BaseTest
         cartPage.CheckoutClick();
         
         CheckoutStepOnePage checkoutStepOnePage = new CheckoutStepOnePage(driver);
-        Assert.That(checkoutStepOnePage.IsPageLoaded(), Is.True);
+        Assert.That(checkoutStepOnePage.IsPageLoaded(), Is.True, $"URL did not match. Current: {driver.Url}");
     }
     
     [Test]
@@ -49,7 +49,7 @@ public class CartTests:BaseTest
         cartPage.ContinueShoppingClick();
         
         InventoryPage inventoryPage = new InventoryPage(driver);
-        Assert.That(inventoryPage.IsPageLoaded(), Is.True);
+        Assert.That(inventoryPage.IsPageLoaded(), Is.True, $"URL did not match. Current: {driver.Url}");
     }
     
     [Test]
@@ -66,7 +66,7 @@ public class CartTests:BaseTest
         
         CartPage cartPage = new CartPage(driver);
         cartPage.ItemNameClick(config["Inventory:TargetItemName"]);
-        Assert.That(inventoryItemPage.IsPageLoaded(), Is.True);
+        Assert.That(inventoryItemPage.IsPageLoaded(), Is.True, $"URL did not match. Current: {driver.Url}");
         Assert.That(inventoryItemPage.GetItemName(), Is.EqualTo(config["Inventory:TargetItemName"]));
     }
 }

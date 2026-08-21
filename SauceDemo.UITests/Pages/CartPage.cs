@@ -47,7 +47,7 @@ public class CartPage
     {
         try
         {
-            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(5));
+            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
             return wait.Until(d => d.Url.EndsWith("/cart.html"));
         }
         catch (WebDriverTimeoutException)
